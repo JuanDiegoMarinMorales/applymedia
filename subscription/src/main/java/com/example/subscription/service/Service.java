@@ -21,9 +21,8 @@ public class Service {
     public void handleCustomerState(String element) {
 
 		try {
-			log.error("CCCCCCCCCCCCCCCCCCCCC");
 			NotificationDTO notification = mapper.readValue(element, NotificationDTO.class);
-			log.info("ActionType: "+notification.getActionType());
+			
 			if (notification.getActionType() == ActionTypeStatus.SUB_BILLING_NO.getNumber()){
 
 				subscriptionService.handleSubcription(notification);

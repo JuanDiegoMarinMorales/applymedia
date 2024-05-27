@@ -48,9 +48,8 @@ public class NotificationService {
 
             NotificationDTO notificationDTO = new NotificationDTO(userName, password, msisdn, shortCode, serviceId,
                     spId, actionType, dateTime, requestId);
-            log.info("Recogida de datos:" + notificationDTO.toString());
             Notification notification = new Notification(notificationDTO);
-            log.info("(ALG) Saving notification to DB: {}", notificationDTO);
+            log.info("Saving notification to DB: {}", notificationDTO);
 
             if(servicio.findByMsisdn(msisdn).isEmpty()){
                 servicio.save(notification);

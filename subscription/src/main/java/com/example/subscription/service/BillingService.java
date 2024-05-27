@@ -30,14 +30,22 @@ public class BillingService {
     public void handleBilling(NotificationDTO notification) {
 		
 		if (!sr.findByMsisdnStateActive(notification.getMsisdn()).isEmpty()) {
-            
-            log.info("He encontrado FirstStep en billing success");
-
 			
 			Subscription subscription= sr.findByMsisdn(notification.getMsisdn()).get();
 			
 			subscription.setLastDr(LocalDateTime.now());
-			subscription.setFirstCharged(false);
+
+			Boolean firstCharged=false;
+
+			log.info("Fecha: "+notification.getDate().getDayOfMonth());
+			if(notification.getDate().getDayOfMonth()==LocalDate.now().getDayOfMonth()){
+				firstCharged=true;
+				log.error("First Charged "+firstCharged);
+			}
+			
+			subscription.setFirstCharged(firstCharged);
+
+
             subscription.setLastDrSuccess(LocalDateTime.now());
             subscription.setBillingSuccess(subscription.getBillingSuccess()+1);
 			sr.save(subscription);
@@ -50,16 +58,14 @@ public class BillingService {
 		
 		if (!sr.findByMsisdnStateActive(notification.getMsisdn()).isEmpty()) {
             
-            log.info("He encontrad FirstStep en billing failed");
-
-			
 			Subscription subscription= sr.findByMsisdn(notification.getMsisdn()).get();
+			subscription.setLastDr(LocalDateTime.now());
+            subscription.setLastDrSuccess(LocalDateTime.now());
             subscription.setBillingFail(subscription.getBillingFail()+1);
 			sr.save(subscription);
 
-
 		}else{
-			log.error("No se ha podido subscribir", new Throwable());
+			log.error("No subscription success", new Throwable());
 		}
 	}
 }

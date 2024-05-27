@@ -5,8 +5,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
+import org.springframework.web.client.RestTemplate;
 
 import com.example.subscription.dto.NotificationDTO;
 import com.example.subscription.entity.FirstStep;
@@ -26,7 +27,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Service
 public class SubscriptionService {
-
+	@Autowired
+	private RestTemplate restTemplate;
 	@Autowired
 	private StatsKafkaService kafkaService;
 	@Autowired
@@ -34,14 +36,14 @@ public class SubscriptionService {
 	@Autowired
 	private SubscriptionRepository sr;
 
-	public void handleSubcription(NotificationDTO notification) {
-		
-		if(sr.findByMsisdn(notification.getMsisdn()).isEmpty()){
-			log.info("He encontrad FirstStep en subs");
+	public String handleSubcription(NotificationDTO notification) {
+		String response = "ERROR";
+
+		if (sr.findByMsisdn(notification.getMsisdn()).isEmpty()) {
 
 			FirstStep f = fs.findByMsisdn(notification.getMsisdn()).get(0);
-			Subscription subscription= new Subscription();
-			
+			Subscription subscription = new Subscription();
+
 			subscription.setClickId(f.getClickId());
 			subscription.setMsisdn(notification.getMsisdn());
 			subscription.setCampaignId(Integer.parseInt(f.getCampaingnId()));
@@ -62,8 +64,22 @@ public class SubscriptionService {
 			subscription.setLastLogin(LocalDateTime.now());
 
 			sr.save(subscription);
-			
+
+			ResponseEntity<String> entity = restTemplate.getForEntity(
+					"http://localhost:8082/login/" + notification.getMsisdn(), String.class);
+
+			response = entity.getBody();
 		}
-		
+		return response;
+	}
+
+	public String login(String msisdn) {
+
+		String response = "ERROR";
+		Boolean exist = sr.findByMsisdn(msisdn).isPresent();
+		if (exist)
+			response = "OK";
+
+		return response;
 	}
 }

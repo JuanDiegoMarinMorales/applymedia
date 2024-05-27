@@ -21,12 +21,9 @@ public class Service {
     public void handleCustomerState(String element) {
 
 		try {
-			//Obtenemos el mensaje de rabbit
-			//Creamos un objeto a partir de la notificación y firststep, y comprobamos el action type
-			//dependiendo de lo que obtengamos usamos los servicios de subscripcion , desubscripcion, billing o billing failed
-
+			log.error("CCCCCCCCCCCCCCCCCCCCC");
 			NotificationDTO notification = mapper.readValue(element, NotificationDTO.class);
-
+			log.info("ActionType: "+notification.getActionType());
 			if (notification.getActionType() == ActionTypeStatus.SUB_BILLING_NO.getNumber()){
 
 				subscriptionService.handleSubcription(notification);
@@ -36,7 +33,7 @@ public class Service {
 				unsub.handleUnsubcription(notification);
 
 			}else if(notification.getActionType()==ActionTypeStatus.SUB_BILLING_YES.getNumber()){
-
+				
 				billingService.handleBilling(notification);
 
 			}else if(notification.getActionType()==ActionTypeStatus.BILLING_FAILED.getNumber()){

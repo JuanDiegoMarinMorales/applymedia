@@ -19,19 +19,15 @@ public class ApplyController {
 
     private final ApplyService service;
 
-    @GetMapping("/hola")
-    public String hola() {
-        return "Hola";
-    }
-
-    @GetMapping("/{pagePath}")
+    @GetMapping("/{country}/{pagePath}")
     public String landing(
             HttpServletRequest request,
             Model model,
             HttpSession sesion,
             @PathVariable(value = "pagePath") String pagePath,
+            @PathVariable(value = "country") String country,
             @RequestParam(value = "cid") Long cid) {
-        return service.conexion(request, model, sesion, pagePath, cid);
+        return service.conexion(request, model, sesion, pagePath,country,cid);
     }
 
     @GetMapping("/{pagePath}/msisdn")

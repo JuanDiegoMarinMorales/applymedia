@@ -12,6 +12,7 @@ import com.google.common.base.Optional;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -19,7 +20,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.client.RestTemplate;
 
 import com.idb.click.model.ClickDto;
@@ -46,6 +46,7 @@ public class ApplyService {
             Model model,
             HttpSession sesion,
             String pagePath,
+            String country,
             Long cid) {
 
         ClickDto clickDto = clickService.clickHandler(request, String.valueOf(cid));
@@ -68,7 +69,7 @@ public class ApplyService {
         model.addAttribute("serviceId", Constants.SERVICEID);
         model.addAttribute("spId", Constants.SPID);
         model.addAttribute("shortcode", Constants.SHORT_CODE);
-        model.addAttribute("ti", "yo");
+        model.addAttribute("uuid", UUID.randomUUID().toString());
         model.addAttribute("ts", System.currentTimeMillis());
         model.addAttribute("servicename", Constants.SERVICENAME);
         model.addAttribute("merchantname", Constants.MERCHANT_NAME);
@@ -102,12 +103,9 @@ public class ApplyService {
             Long spId,
             String shortCode) {
 
-        log.info("Datos recibidos 1: " + msisdn);
-        log.info("Datos recibidos 2: " + spId);
-        log.info("Datos recibidos 3: " + shortCode);
         Token token = new Token();
         String result = "";
-        if (sesion.getAttribute("token").toString() != "") {
+        if (!sesion.getAttribute("token").toString().equals("")) {
             result = sesion.getAttribute("token").toString();
             token = tokenService.cogerToken(result);
         }
@@ -120,18 +118,22 @@ public class ApplyService {
         fs.setIp((String.valueOf(token.getIp())));
         fs.setNetwork(token.getNetwork());
 
-        Boolean exist = servicio.findByMsisdn(Long.valueOf(msisdn)).isPresent();
+        Boolean exist;
+        try {
+            exist = servicio.findByMsisdn(Long.valueOf(msisdn)).isPresent();
+        } catch (Exception e) {
+            exist = false;
+        }
 
         if (msisdn.isEmpty() || !isNumeric(msisdn) || msisdn.length() < 13 || exist) {
-            log.info("Repetido o mal escrito");
+
             model.addAttribute("action", "/" + pagePath + "/deteccion");
             model.addAttribute("spId", spId);
             model.addAttribute("shortcode", shortCode);
             model.addAttribute("error", "Invalid number");
             return "/" + pagePath + "/enter_msisdn";
         } else {
-            log.info("No Repetido o bien escrito "+msisdn);
-            
+
             fs.setMsisdn(Long.valueOf(msisdn));
 
             Map<String, String> requestContent = new HashMap<>();
@@ -159,15 +161,16 @@ public class ApplyService {
             // Crear la entidad HTTP
             HttpEntity<String> entity = new HttpEntity<>(jsonData, headers);
             try {
-                ResponseEntity<String> response = restTemplate.postForEntity(Constants.HOST + "/sendSubPincode", entity,
-                        String.class);
-                log.error("Respuesta de la llamada:" + response.getBody());
+                //Send pin to user for put on the input 
+                ResponseEntity<String> response = restTemplate.postForEntity(Constants.HOST + "/sendSubPincode", entity,String.class);
+                log.error("Response {}:" + response.getBody());
             } catch (Exception e) {
-                log.error("Error de la llamada:" + e.getMessage());
+                log.error("Error {}:" + e.getMessage());
+
+                int pin = (int) (Math.random() * 90000) + 10000;
+                fs.setPin(Integer.valueOf(pin));
             }
 
-            int pin = (int) (Math.random() * 90000) + 10000;
-            fs.setPin(Integer.valueOf(pin));
             servicio.save(fs);
 
             model.addAttribute("action", "/" + pagePath + "/comprobarPin");
@@ -182,18 +185,57 @@ public class ApplyService {
             String pagePath,
             Integer pin) {
 
-                log.info("El valor del pin es "+pin);
         if (isNumeric(String.valueOf(pin)) && String.valueOf(pin).length() == 5) {
+
             Token token = new Token();
             String result = "";
-            if (sesion.getAttribute("token").toString() != "") {
+
+            if (!sesion.getAttribute("token").toString().equals("")) {
                 result = sesion.getAttribute("token").toString();
                 token = tokenService.cogerToken(result);
             }
+
+            FirstStep fs = servicio.findByClickId(token.getClickId()).get();
+
+            Map<String, String> requestContent = new HashMap<>();
+
+            requestContent.put("user", Constants.USER_NAME);
+            requestContent.put("password", Constants.PASSWORD);
+            requestContent.put("msisdn", fs.getMsisdn().toString());
+            requestContent.put("shortcode", Constants.SHORT_CODE);
+            requestContent.put("serviceId", Constants.SERVICEID.toString());
+            requestContent.put("spId", Constants.SPID.toString());
+            requestContent.put("pincode", pin.toString());
+
+            HttpHeaders headers = new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+
+            ObjectMapper mapper = new ObjectMapper();
+            String jsonData = "";
+
+            try {
+                jsonData = mapper.writeValueAsString(requestContent);
+            } catch (Exception e) {
+                log.error("Error:" + e.getMessage());
+                e.printStackTrace();
+            }
+
+            HttpEntity<String> entity = new HttpEntity<>(jsonData, headers);
+
+            try {
+                //Call for verify pincode previusly sent to user 
+                ResponseEntity<String> response = restTemplate.postForEntity(Constants.HOST + "/verifySubPincode",entity,String.class);
+                log.error("Response {}:" + response.getBody());
+
+            } catch (Exception e) {
+
+                log.error("Error {}:" + e.getMessage());
+
+            }
+
             if (servicio.findByClickId(token.getClickId()).isPresent()) {
 
-                // log.info(msisdn + "Numerooooooooooo");
-                FirstStep fs = servicio.findByClickId(token.getClickId()).get();
+                fs = servicio.findByClickId(token.getClickId()).get();
                 int pinAComprobar = fs.getPin();
 
                 if (pinAComprobar == pin) {

@@ -173,7 +173,6 @@ public class ApplyService {
             model.addAttribute("action", "/" + pagePath + "/comprobarPin");
             return "/" + pagePath + "/pin";
         }
-
     }
 
     public String pin(

@@ -47,7 +47,8 @@ public class BillingService {
             subscription.setLastDrSuccess(LocalDateTime.now());
             subscription.setBillingSuccess(subscription.getBillingSuccess()+1);
 			sr.save(subscription);
-			//kafkaService.sendBilling(subscription.getClickId(), subscription.getCampaignId(), subscription.getMsisdn(), subscription.getId().toString(), 60302, false, true, false, false, 0, BillingQuality.NORMAL, BillingStatus.SUCCESS, subscription.getSubscriptionTimestamp());
+			
+			kafkaService.sendBilling(subscription.getClickId(), subscription.getCampaignId(), subscription.getMsisdn(), subscription.getId().toString(), 60302, false, firstCharged, firstCharged, false, 0, BillingQuality.NORMAL, BillingStatus.SUCCESS, subscription.getSubscriptionTimestamp());
 
 		}
 	}
@@ -61,6 +62,8 @@ public class BillingService {
             subscription.setLastDrSuccess(LocalDateTime.now());
             subscription.setBillingFail(subscription.getBillingFail()+1);
 			sr.save(subscription);
+
+			kafkaService.sendBilling(subscription.getClickId(), subscription.getCampaignId(), subscription.getMsisdn(), subscription.getId().toString(), 60302, false, false, false, false, 0, BillingQuality.NORMAL, BillingStatus.FAILED, subscription.getSubscriptionTimestamp());
 
 		}else{
 			log.error("No subscription success", new Throwable());

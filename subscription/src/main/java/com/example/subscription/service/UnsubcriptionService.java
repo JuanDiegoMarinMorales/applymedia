@@ -1,5 +1,6 @@
 package com.example.subscription.service;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,6 +32,7 @@ public class UnsubcriptionService {
     
 	private final RestTemplate restTemplate;
 	private final SubscriptionRepository sr;
+	private StatsKafkaService kafkaService;
 
 	public void handleUnsubcription(NotificationDTO notification) {
 		
@@ -41,6 +43,9 @@ public class UnsubcriptionService {
             subscription.setActive(false);
             subscription.setUnsubscriptionTimestamp(LocalDateTime.now());
 			sr.save(subscription);
+
+            Boolean sameDay = (notification.getDate().getDayOfMonth()==subscription.getSubscriptionDate().getDayOfMonth())? true : false;
+            kafkaService.sendUnsubscription(subscription.getClickId(), subscription.getCampaignId(), subscription.getMsisdn(), subscription.getId().toString(), 1234, false, false, sameDay, null);
 
 			//For provider unsub
 			Map<String, String> requestContent = new HashMap<>();

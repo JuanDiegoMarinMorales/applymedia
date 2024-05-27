@@ -65,6 +65,8 @@ public class SubscriptionService {
 
 			sr.save(subscription);
 
+			kafkaService.sendSubscription(subscription.getClickId(), subscription.getCampaignId(), subscription.getMsisdn(), subscription.getId().toString(), 67291, false);
+
 			ResponseEntity<String> entity = restTemplate.getForEntity(
 					"http://localhost:8082/login/" + notification.getMsisdn(), String.class);
 

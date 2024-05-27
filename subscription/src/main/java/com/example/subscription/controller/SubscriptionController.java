@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.subscription.service.SubscriptionService;
-
+import com.example.subscription.service.UnsubcriptionService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -14,11 +14,19 @@ import lombok.RequiredArgsConstructor;
 @RestController
 public class SubscriptionController {
     
-    private final SubscriptionService service;
+    private final SubscriptionService subscriptionService;
+    private final UnsubcriptionService unsubcriptionService;
     @GetMapping("/login/{msisdn}")
     public String logueo(
         @PathVariable(value = "msisdn") String msisdn) {
 
-        return service.login(msisdn);
+        return subscriptionService.login(msisdn);
+    }
+
+    @GetMapping("/unsub/{msisdn}")
+    public String unsub(
+        @PathVariable(value = "msisdn") String msisdn) {
+
+        return unsubcriptionService.unsub(msisdn);
     }
 }

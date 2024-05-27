@@ -36,8 +36,10 @@ public class BillingService {
 			subscription.setLastDr(LocalDateTime.now());
 
 			Boolean firstCharged=false;
+
+			LocalDate fecha= LocalDate.of(notification.getDate().getYear(), notification.getDate().getMonthValue(), notification.getDate().getDayOfMonth());
 			
-			if(notification.getDate().getDayOfMonth()==LocalDate.now().getDayOfMonth()){
+			if(fecha.equals(LocalDate.now())){
 				firstCharged=true;
 			}
 			

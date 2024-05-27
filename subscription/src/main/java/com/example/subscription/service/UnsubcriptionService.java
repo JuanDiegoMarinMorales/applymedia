@@ -28,62 +28,69 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 public class UnsubcriptionService {
-    
-    
-	private final RestTemplate restTemplate;
-	private final SubscriptionRepository sr;
-	private StatsKafkaService kafkaService;
 
-	public void handleUnsubcription(NotificationDTO notification) {
-		
-		if(!sr.findByMsisdnStateActive(notification.getMsisdn()).isEmpty()){
+    private final RestTemplate restTemplate;
+    private final SubscriptionRepository sr;
+    private StatsKafkaService kafkaService;
 
-			Subscription subscription= sr.findByMsisdnStateActive(notification.getMsisdn()).get();
-			subscription.setState("INACTIVE");
+    public void handleUnsubcription(NotificationDTO notification) {
+        String resp = "ERROR";
+
+        if (!sr.findByMsisdnStateActive(notification.getMsisdn()).isEmpty()) {
+
+            Subscription subscription = sr.findByMsisdnStateActive(notification.getMsisdn()).get();
+            subscription.setState("INACTIVE");
             subscription.setActive(false);
             subscription.setUnsubscriptionTimestamp(LocalDateTime.now());
-			sr.save(subscription);
+            sr.save(subscription);
 
-            Boolean sameDay = (notification.getDate().getDayOfMonth()==subscription.getSubscriptionDate().getDayOfMonth())? true : false;
-            kafkaService.sendUnsubscription(subscription.getClickId(), subscription.getCampaignId(), subscription.getMsisdn(), subscription.getId().toString(), 1234, false, false, sameDay, null);
+            Boolean sameDay = (notification.getDate().getDayOfMonth() == subscription.getSubscriptionDate()
+                    .getDayOfMonth()) ? true : false;
+            kafkaService.sendUnsubscription(subscription.getClickId(), subscription.getCampaignId(),
+                    subscription.getMsisdn(), subscription.getId().toString(), 1234, false, false, sameDay, null);
 
-			//For provider unsub
-			Map<String, String> requestContent = new HashMap<>();
+            // For provider unsub
 
-            requestContent.put("user", Constants.USER_NAME);
-            requestContent.put("password", Constants.PASSWORD);
-            requestContent.put("msisdn", notification.getMsisdn().toString());
-            requestContent.put("shortcode", Constants.SHORT_CODE);
-            requestContent.put("serviceId", Constants.SERVICEID.toString());
-            requestContent.put("spId", Constants.SPID.toString());
+        } else {
+            log.error("Unsubcription failed", new Throwable());
+        }
 
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_JSON);
+    }
 
-            ObjectMapper mapper = new ObjectMapper();
-            String jsonData = "";
+    public String unsub(String msisdn) {
+        Map<String, String> requestContent = new HashMap<>();
 
-            try {
-                jsonData = mapper.writeValueAsString(requestContent);
-            } catch (Exception e) {
-                log.error("Error:" + e.getMessage());
-                e.printStackTrace();
-            }
+        requestContent.put("user", Constants.USER_NAME);
+        requestContent.put("password", Constants.PASSWORD);
+        requestContent.put("msisdn", msisdn);
+        requestContent.put("shortcode", Constants.SHORT_CODE);
+        requestContent.put("serviceId", Constants.SERVICEID.toString());
+        requestContent.put("spId", Constants.SPID.toString());
 
-            HttpEntity<String> entity = new HttpEntity<>(jsonData, headers);
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
 
-            try {
-                //Call for verify pincode previusly sent to user 
-                ResponseEntity<String> response = restTemplate.postForEntity(Constants.HOST + "/unsubscribeUser",entity,String.class);
-                log.error("Response {}:" + response.getBody());
+        ObjectMapper mapper = new ObjectMapper();
+        String jsonData = "";
 
-            } catch (Exception e) {
-                log.error("Error {}:" + e.getMessage());
-            }
+        try {
+            jsonData = mapper.writeValueAsString(requestContent);
+        } catch (Exception e) {
+            log.error("Error:" + e.getMessage());
+            e.printStackTrace();
+        }
 
-		}else{
-			log.error("Unsubcription failed", new Throwable());
-		}
-		
-	}
+        HttpEntity<String> entity = new HttpEntity<>(jsonData, headers);
+
+        try {
+
+            ResponseEntity<String> response = restTemplate.postForEntity(Constants.HOST + "/unsubscribeUser", entity,
+                    String.class);
+            log.error("Response {}:" + response.getBody());
+
+        } catch (Exception e) {
+            log.error("Error {}:" + e.getMessage());
+        }
+        return "OK";
+    }
 }

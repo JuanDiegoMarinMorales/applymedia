@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <title>Gametime</title>
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <link th:attr="href=@{/css/style.css}" rel="stylesheet" />
+    <!-- <link rel="stylesheet" href="../../static/css/style.css" /> -->
+  </head>
+
+  <body>
+    <header>
+      <div class="logo">
+        <img th:src="@{/images/logo.png}" alt="icon" />
+      </div>
+      <div class="languages">
+        <a id="lang_ar" onclick="arabLanguage()" href="javascript:void(0)" class="language">عرب</a>
+        <a id="lang_ku" onclick="kurdishLanguage()" href="javascript:void(0)" class="language">Kurdî</a>
+      </div>
+    </header>
+    <div class="hero"></div>
+    <main class="content page" id="home">
+      <div class="container">
+        <p class="error arab">عذرًا، حصل خطأ</p>
+        <p class="error arab">يرجى المحاولة لاحقًا</p>
+        <p class="error kurdish">Oops, xeletiyek hebû</p>
+      </div>
+    </main>
+    <script src="/js/toggle_language.js"></script>
+  </body>
+</html>

@@ -1,0 +1,128 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <title>Gametime</title>
+    <meta name="referrer" content="unsafe-url" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <link th:attr="href=@{/css/IR_Gametime_V2/style.css}" rel="stylesheet" />
+    <!-- <link rel="stylesheet" href="../../static/css/IR_Gametime_V2/style.css" /> -->
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-RPXB0BMR2C"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
+      gtag("config", "G-RPXB0BMR2C");
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-59Z2K7ZZ");
+    </script>
+    <!-- End Google Tag Manager -->
+  </head>
+
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-59Z2K7ZZ"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+    <header>
+      <!--
+      <div class="logo">
+        <img th:src="@{/images/IR_Gametime_V2/logo.png}" alt="logo" />
+        <img src="../../static/images/IR_Gametime_V2/logo.png" alt="logo" />
+      </div>
+      -->
+      <div class="languages">
+        <a id="lang_ar" onclick="arabLanguage()" href="javascript:void(0)" class="language">عرب</a>
+        <a id="lang_ku" onclick="kurdishLanguage()" href="javascript:void(0)" class="language">Kurdî</a>
+      </div>
+    </header>
+    <div class="hero"></div>
+    <div class="wrap">
+      <main class="content page" id="home">
+        <div class="container">
+          <h1 class="arab">احصل على أفضل الألعاب</h1>
+          <h1 class="kurdish">Lîstikên çêtirîn bistînin</h1>
+
+          <div class="banner">
+            <img th:src="@{/images/IR_Gametime_V2/apps-games.png}" alt="apps" />
+            <!-- <img src="../../static/images/IR_Gametime_V2/apps-games.png" alt="apps" /> -->
+          </div>
+
+          <p class="arab">مبروك، لقد تمّ اشتراكك بنجاح في خدمة Gametime</p>
+          <p class="kurdish">Pîroz be, te bi serkeftî bû abonetiya Gametime</p>
+
+          <button id="btn" class="btn">
+            <span class="arab">الوصول الى المحتوى</span> <span class="kurdish">Gihiştina naverokê</span>
+          </button>
+        </div>
+      </main>
+    </div>
+
+    <script type="text/javascript">
+      document.getElementById("btn").onclick = function () {
+        location.href = "https://www.gametime.link/";
+      };
+    </script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script type="text/javascript" th:src="@{/js/toggle_language.js}"></script>
+
+    <!--<script type="text/javascript" src="../../static/js/toggle_language.js"></script>-->
+
+    <!-- Start of Background animation dots  -->
+    <div class="animation">
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <!-- End of Background animation dots  -->
+    </div>
+  </body>
+</html>

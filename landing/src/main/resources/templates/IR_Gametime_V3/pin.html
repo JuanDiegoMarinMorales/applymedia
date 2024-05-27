@@ -1,0 +1,100 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <title>Gametime</title>
+    <meta name="referrer" content="unsafe-url" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+
+    <link th:attr="href=@{/css/IR_Gametime_V3/style.css}" rel="stylesheet" />
+    <!-- <link rel="stylesheet" href="../../static/css/IR_Gametime_V3/style.css" /> -->
+
+      <!-- !DO NOT REMOVE -->
+      <script th:inline="javascript">
+          /*<![CDATA[*/
+          let url = /*[[${antifraud}]]*/ null;
+
+          fetch(url) // Hacer un fetch al url del json
+              .then((response) => response.json()) // Recibir el json
+              .then((data) => {
+                  let script = document.createElement("script"); // Crear un tag script
+                  let launcher = document.createElement("script");
+
+                  script.innerHTML = data.s; // Escribir la función en el tag script
+                  launcher.innerHTML = "var event = new Event('DCBProtectRun');document.dispatchEvent(event);";
+
+                  document.head.insertBefore(script, document.head.firstChild);
+                  document.head.insertBefore(launcher, document.head.lastChild);
+              });
+          /*]]>*/
+      </script>
+  </head>
+
+
+  <body>
+    <div class="wrap">
+      <header>
+        <div class="languages">
+          <a id="lang_ar" onclick="arabLanguage()" href="javascript:void(0)" class="language">عرب</a>
+          <a id="lang_ku" onclick="kurdishLanguage()" href="javascript:void(0)" class="language">Kurdî</a>
+        </div>
+
+        <div class="stepper">
+          <div class="step">
+            <span class="full"><span class="arab">1 الخطوة</span><span class="kurdish">STEP 1</span></span>
+            <div class="bar full"></div>
+          </div>
+
+          <div class="step">
+            <span class="full"><span class="arab">2 الخطوة</span><span class="kurdish">STEP 2</span></span>
+            <div class="bar full"></div>
+          </div>
+
+          <div class="step">
+            <span class="blue"><span class="arab">2 الخطوة</span><span class="kurdish">STEP 3</span></span>
+            <div class="bar blue"></div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+        <img src="/images/IR_Gametime_V3/phone.png" class="main">
+        <h1>احصل على أفضل الألعاب</h1>
+
+        <form class="form pin" id="form" th:action="${action}" method="post">
+          <p th:if="${error}" th:class="error" th:text="${error}"></p>
+          <h3 class="arab">ادخل رمز التفعيل</h3>
+          <h3 class="kurdish">Koda Pînê Binivîse</h3>
+          <input type="tel" name="pin" maxlength="5" id="pin" required class="input" placeholder="------" />
+          <!-- !DO NOT REMOVE -->
+          <input type="hidden" th:value="${ts}" name="ts" />
+          <input type="hidden" th:value="${ti}" name="ti" />
+          <!-- !HAS TO HAVE ID cta_button -->
+          <button class="btn shake-anim" id="cta_button">
+            <span class="arab"> تأكيد الاشتراك</span> <span class="kurdish">Bibin Abone</span>
+          </button>
+          <p class="tariff"><span class="arab">240 دينار/يوم</span><span class="kurdish">240 IQD / roj</span></p>
+        </form>
+      </main>
+
+      <footer>
+        <div class="disclaimer">
+          <div class="arab">
+            <p>:انّك توافق على الشروط والاحكام التالية Gametime باشتراكك في خدمة</p>
+            <p>سعر الرسالة المستلمة 240 دينار عراقي يوميًا •</p>
+            <p>يحصل المشتركين الجدد على 1 يوم مجاني ويتم تجديد الاشتراك يوميًا وبشكل تلقائي •</p>
+            <p>يمكنك الغاء الاشتراك في أي وقت من خلال ارسال 06 الى 4056 •</p>
+          </div>
+          <div class="kurdish">
+            <p>Bi aboneya Karûbarê Gametime, hûn şert û mercên jêrîn qebûl dikin.</p>
+            <p>Bihayê peyama ku hatiye wergirtin rojane 240 dînarê Iraqî ye</p>
+            <p>Aboneyên nû 1 rojek belaş distînin, û abonetî rojane û bixweber tê nûkirin</p>
+            <p>Hûn dikarin her dem bi şandina 06 ji 4056 re, abonetiyê nekin</p>
+          </div>
+        </div>
+      </footer>
+    </div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script type="text/javascript" th:src="@{/js/toggle_language.js}"></script>
+    <!-- <script type="text/javascript" src="../../static/js/toggle_language.js"></script> -->

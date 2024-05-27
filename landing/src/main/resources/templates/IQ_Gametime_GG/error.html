@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <title>Gametime</title>
+    <meta name="referrer" content="unsafe-url" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+
+    <link th:attr="href=@{/css/IQ_Gametime_GG/style.css}" rel="stylesheet" />
+    <!-- <link rel="stylesheet" href="../../static/css/IQ_Gametime_GG/style.css" /> -->
+
+    <!-- !DO NOT REMOVE -->
+    <script th:inline="javascript">
+      /*<![CDATA[*/
+      let url = /*[[${antifraud}]]*/ null;
+
+      fetch(url) // Hacer un fetch al url del json
+        .then((response) => response.json()) // Recibir el json
+        .then((data) => {
+          let script = document.createElement("script"); // Crear un tag script
+          let launcher = document.createElement("script");
+
+          script.innerHTML = data.s; // Escribir la función en el tag script
+          launcher.innerHTML = "var event = new Event('DCBProtectRun');document.dispatchEvent(event);";
+
+          document.head.insertBefore(script, document.head.firstChild);
+          document.head.insertBefore(launcher, document.head.lastChild);
+        });
+      /*]]>*/
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-5TFDMF4Q");
+    </script>
+    <!-- End Google Tag Manager -->
+  </head>
+
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-5TFDMF4Q"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <header>
+      <div class="flex">
+        <div id="menu">
+          <div class="toggle"></div>
+          <div class="navigation">
+            <ul>
+              <li>
+                <a onclick="changePage('whatis')">
+                  <span class="english">What is Game Time?</span>
+                  <span class="kurdish">Dema lîstikê çi ye?</span>
+                  <span class="arab">ما هو وقت اللعب؟</span>
+                </a>
+              </li>
+              <li>
+                <a onclick="changePage('aboutus')">
+                  <span class="english">About Us</span>
+                  <span class="kurdish">Çûna nava</span>
+                  <span class="arab">معلومات عنا</span>
+                </a>
+              </li>
+              <li>
+                <a onclick="changePage('contact')">
+                  <span class="english">Contact</span>
+                  <span class="kurdish">Têkelî</span>
+                  <span class="arab">الاتصال</span>
+                </a>
+              </li>
+              <li>
+                <a onclick="changePage('home')">
+                  <span class="english">Back</span>
+                  <span class="kurdish">Paş</span>
+                  <span class="arab">خلف</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="logo">
+        <!-- <img src="../../static/images/IQ_Gametime_GG/logo.png" /> -->
+        <img src="/images/IQ_Gametime_GG/logo.png" />
+      </div>
+
+      <div class="languages">
+        <a id="lang_ar" onclick="arabLanguage()" href="javascript:void(0)" class="language english kurdish">عرب</a>
+        <a id="lang_ku" onclick="kurdishLanguage()" href="javascript:void(0)" class="language english arab">Kurdî</a>
+        <a id="lang_en" onclick="englishLanguage()" href="javascript:void(0)" class="language kurdish arab">English</a>
+      </div>
+    </header>
+
+    <div class="page" id="home">
+      <div class="wrap">
+        <div class="stepper">
+          <div class="step">
+            <span class="arab">1 الخطوة</span>
+            <span class="kurdish">STEP 1</span>
+            <span class="english">STEP 1</span>
+            <div class="bar blue"></div>
+          </div>
+
+          <div class="step">
+            <span class="arab">2 الخطوة</span>
+            <span class="kurdish">STEP 2</span>
+            <span class="english">STEP 2</span>
+            <div class="bar"></div>
+          </div>
+
+          <div class="step">
+            <span class="arab">3 الخطوة</span>
+            <span class="kurdish">STEP 3</span>
+            <span class="english">STEP 3</span>
+            <div class="bar"></div>
+          </div>
+        </div>
+        <main class="content">
+          <img src="/images/IQ_Gametime_GG/phone.png" class="main-img" />
+          <!-- <img src="../../static/images/IQ_Gametime_GG/phone.png" class="main-img" /> -->
+          <h1 class="arab">احصل على أفضل الألعاب</h1>
+          <h1 class="kurdish">Lîstikên çêtirîn bistînin</h1>
+          <h1 class="english">Get the best games</h1>
+
+          <h3 class="arab">يرجى المحاولة لاحقًا</h3>
+          <h3 class="kurdish">Oops, xeletiyek hebû</h3>
+          <h3 class="english">Oops, something went wrong</h3>
+
+          <form th:action="${action}">
+            <button class="btn shake-anim">
+              <span class="arab">حاول ثانية</span>
+              <span class="kurdish">Dubare bixebitin</span>
+              <span class="english">Try again</span>
+            </button>
+            <input type="hidden" name="cid" th:value="${cid}" />
+          </form>
+        </main>
+      </div>
+    </div>
+
+    <div class="page hidden" id="whatis">
+      <div class="bg thx">
+        <div class="wrap">
+          <div class="content">
+            <h1 class="english">What is Game Time?</h1>
+            <p class="english">
+              Game Time is a platform for everyone who loves games. Offers various features; videos, reviews, tips, and
+              apps based on a subscription-based model. For a set fixed fee, users can access all content without ads.
+              Why should I subscribe? Game Time removes all the time-wasting ads, access to the full game version, and
+              includes both free and paid content.
+            </p>
+            <h1 class="kurdish">Dema lîstikê çi ye?</h1>
+            <p class="kurdish">
+              Game Time ji bo her kesê ku ji lîstikan hez dike platformek e. Taybetmendiyên cihêreng pêşkêşî dike;
+              vîdyoy, nirxandin, serişte û sepanên ku li ser bingeha modelek abonetiyê ne. Ji bo xercek diyarkirî,
+              bikarhêner dikarin bêyî reklaman bigihîjin hemî naverokê. Çima divê ez abonetiyê bikim? Wexta lîstikê hemî
+              reklamên windakirina demê radike, gihîştina guhertoya lîstikê ya tevahî, û naveroka belaş û drav tê de
+              digire.
+            </p>
+            <h1 class="arab">ما هو وقت اللعب؟</h1>
+            <p class="arab">
+              وقت اللعب هو منصة لكل من يحب الألعاب. تقدم ميزات متنوعة؛ مقاطع فيديو، مراجعات، نصائح، وتطبيقات بنموذج
+              اشتراك. يمكن للمستخدمين، مقابل رسوم ثابتة محددة، الوصول إلى جميع المحتوى بدون إعلانات. لماذا يجب عليّ
+              الاشتراك؟ وقت اللعب يزيل جميع الإعلانات التي تهدر الوقت، ويوفر وصولًا إلى نسخة اللعبة الكاملة، بالإضافة
+              إلى المحتوى المجاني والمدفوع.
+            </p>
+            <div class="form">
+              <button class="btn" onclick="changePage('home')">
+                <span class="english">Return</span>
+                <span class="kurdish">Paş</span>
+                <span class="arab">خلف</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="page hidden" id="aboutus">
+      <div class="bg thx">
+        <div class="wrap">
+          <div class="content">
+            <h1 class="english">About us</h1>
+            <p class="english">
+              We are a team of gaming enthusiasts and mobile technology enthusiasts who want to create high-quality
+              mobile entertainment for our users around the world. At Game Time, we aim to offer a safe, varied, and
+              high-quality gaming hub for everyone who wants to enjoy the best mobile entertainment experience
+              completely ad-free.
+            </p>
+            <h1 class="kurdish">Çûna nava</h1>
+            <p class="kurdish">
+              Em tîmek dilxwazên lîstikê û dilsozên teknolojiya mobîl in ku dixwazin ji bo bikarhênerên xwe yên li
+              çaraliyê cîhanê şahiyek mobîl-kalîteya bilind biafirînin. Di Game Time de, em armanc dikin ku ji bo her
+              kesê ku dixwazin ji ezmûna şahiya mobîl a çêtirîn bi tevahî bê reklam kêfê bistînin navendek lîstikê ya
+              ewle, cihêreng û bi kalîte pêşkêşî bikin.
+            </p>
+            <h1 class="arab">معلومات عنا</h1>
+            <p class="arab">
+              نحن فريق من عشاق الألعاب وعشاق التكنولوجيا المحمولة نرغب في إنشاء ترفيه محمول عالي الجودة لمستخدمينا في
+              جميع أنحاء العالم. في وقت اللعب، نهدف إلى تقديم محطة ألعاب آمنة ومتنوعة وعالية الجودة لكل من يرغب في
+              الاستمتاع بأفضل تجربة ترفيه محمول بدون إعلانات.
+            </p>
+            <div class="form">
+              <button class="btn" onclick="changePage('home')">
+                <span class="english">Return</span>
+                <span class="kurdish">Paş</span>
+                <span class="arab">خلف</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="page hidden" id="contact">
+      <div class="bg thx">
+        <div class="wrap">
+          <div class="content">
+            <h1 class="english">Contact us</h1>
+            <p class="english">
+              <a href="mailto:info@gametimeportal.com">info@gametimeportal.com</a>
+            </p>
+            <h1 class="kurdish">Têkelî</h1>
+            <p class="kurdish">
+              <a href="mailto:info@gametimeportal.com">info@gametimeportal.com</a>
+            </p>
+            <h1 class="arab">الاتصال</h1>
+            <p class="arab">
+              <a href="mailto:info@gametimeportal.com">info@gametimeportal.com</a>
+            </p>
+            <div class="form">
+              <button class="btn" onclick="changePage('home')">
+                <span class="english">Return</span>
+                <span class="kurdish">Paş</span>
+                <span class="arab">خلف</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script type="text/javascript" src="/js/IQ_Gametime_GG/toggle_language.js"></script>
+    <script type="text/javascript" src="/js/toggleMenu.js"></script>
+    <!-- <script type="text/javascript" src="../../static/js/IQ_Gametime_GG/toggle_language.js"></script>
+    <script type="text/javascript" src="../../static/js/toggleMenu.js"></script> -->
+  </body>
+</html>

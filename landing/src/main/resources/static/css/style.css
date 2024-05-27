@@ -1,0 +1,197 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap");
+/*
+  1. Use a more-intuitive box-sizing model.
+*/
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+/*
+    2. Remove default margin
+  */
+* {
+  margin: 0;
+}
+/*
+    3. Allow percentage-based heights in the application
+  */
+html,
+body {
+  height: 100%;
+}
+/*
+    Typographic tweaks!
+    4. Add accessible line-height
+    5. Improve text rendering
+  */
+body {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+/*
+    6. Improve media defaults
+  */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+/*
+    7. Remove built-in form typography styles
+  */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+/*
+    8. Avoid text overflows
+  */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+/*
+    9. Create a root stacking context
+  */
+#root,
+#__next {
+  isolation: isolate;
+}
+
+.hidden {
+  display: none;
+}
+body {
+  font-family: "Roboto", sans-serif;
+  font-size: 1em;
+  color: #fff;
+  background-color: #272727;
+}
+header {
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 5px;
+}
+
+header a {
+  color: orange;
+  text-decoration: none;
+}
+
+.logo {
+  width: 150px;
+  padding: 15px;
+}
+.hero {
+  background-image: url(../images/background.png);
+  background-size: cover;
+  background-position: center;
+  height: 40dvh;
+}
+.container {
+  max-width: 450px;
+  text-align: center;
+  margin: 0 auto;
+}
+.thanks {
+  font-size: 1.7em;
+  margin: 20px;
+}
+.tariff {
+  font-size: 0.5em;
+  color: rgba(255, 255, 255, 0.3);
+}
+footer {
+  font-size: 0.7em;
+  color: rgba(255, 255, 255, 0.3);
+  text-align: center;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background: #1e1e1e;
+  padding: 20px;
+  border: 1px solid #3d3c3c;
+  border-radius: 10px;
+  color: white;
+  text-align: center;
+  font-size: 20px;
+  max-width: 350px;
+  margin: 20px auto;
+}
+
+.form input {
+  height: 35px;
+  width: 100%;
+  outline: none;
+  border: 2px solid orange;
+  background: transparent;
+  padding: 20px 10px;
+  border-radius: 5px;
+  transition: 0.5s;
+  color: #818080;
+  font-size: 20px;
+  text-align: center;
+  background: url(../images/bg-input.png) 13px 8px/24px no-repeat #fff;
+  letter-spacing: 1.5px;
+  padding-left: 50px;
+}
+
+/* .form input:focus {
+  background: orange;
+} */
+
+.form button {
+  width: 100%;
+  color: white;
+  transition: 0.5s;
+  font-size: 20px;
+  outline: none;
+  border: none;
+  height: 45px;
+  border-radius: 5px;
+  background: orange;
+  align-self: flex-end;
+}
+.input-group {
+  position: relative;
+}
+.prefix {
+  position: absolute;
+  left: calc(50% - 140px);
+  padding-left: 45px;
+  top: 10px;
+  font-weight: 500;
+  font-size: 17px;
+  color: #818080;
+}
+.btn {
+  width: 250px;
+  color: white;
+  transition: 0.5s;
+  font-size: 20px;
+  outline: none;
+  border: none;
+  height: 45px;
+  border-radius: 5px;
+  background: orange;
+  align-self: flex-end;
+}
+.error {
+  font-size: 1.5em;
+  margin: 20px;
+}

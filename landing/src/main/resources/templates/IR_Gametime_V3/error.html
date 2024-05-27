@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <title>Gametime</title>
+    <meta name="referrer" content="unsafe-url" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+
+    <link th:attr="href=@{/css/IR_Gametime_V3/style.css}" rel="stylesheet" />
+    <!-- <link rel="stylesheet" href="../../static/css/IR_Gametime_V3/style.css" /> -->
+  </head>
+
+  <body>
+    <div class="wrap">
+      <header>
+        <div class="languages">
+          <a id="lang_ar" onclick="arabLanguage()" href="javascript:void(0)" class="language">عرب</a>
+          <a id="lang_ku" onclick="kurdishLanguage()" href="javascript:void(0)" class="language">Kurdî</a>
+        </div>
+
+        <div class="stepper">
+          <div class="step">
+            <span class="full"><span class="arab">1 الخطوة</span><span class="kurdish">STEP 1</span></span>
+            <div class="bar full"></div>
+          </div>
+
+          <div class="step">
+            <span class="full"><span class="arab">2 الخطوة</span><span class="kurdish">STEP 2</span></span>
+            <div class="bar full"></div>
+          </div>
+
+          <div class="step">
+            <span class="full"><span class="arab">2 الخطوة</span><span class="kurdish">STEP 3</span></span>
+            <div class="bar full"></div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content">
+        <img src="/images/IR_Gametime_V3/phone.png" class="main">
+        <h1>احصل على أفضل الألعاب</h1>
+        
+        <h2 class="arab">يرجى المحاولة لاحقًا</h2>
+        <h2 class="kurdish">Oops, xeletiyek hebû</h2>
+
+        <form th:action="${action}">
+          <button class="btn shake-anim">
+            <span class="arab">حاول ثانية</span>
+            <span class="kurdish">Dubare bixebitin</span></button>
+          <input type="hidden" name="cid" th:value="${cid}">
+        </form>
+      </main>
+    </div>
+  
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  
+  <script type="text/javascript" th:src="@{/js/toggle_language.js}"></script>
+  <!-- <script type="text/javascript" src="../../static/js/toggle_language.js"></script> -->
+
+  </body>
+</html>

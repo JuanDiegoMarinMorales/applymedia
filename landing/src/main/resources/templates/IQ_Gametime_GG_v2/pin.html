@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <title>Gametime</title>
+    <meta name="referrer" content="unsafe-url" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+
+    <link th:attr="href=@{/css/IQ_Gametime_GG_v2/style.css}" rel="stylesheet" />
+    <!-- <link rel="stylesheet" href="../../static/css/IQ_Gametime_GG_v2/style.css" /> -->
+
+    <!-- !DO NOT REMOVE -->
+    <script th:inline="javascript">
+      /*<![CDATA[*/
+      let url = /*[[${antifraud}]]*/ null;
+
+      fetch(url) // Hacer un fetch al url del json
+        .then((response) => response.json()) // Recibir el json
+        .then((data) => {
+          let script = document.createElement("script"); // Crear un tag script
+          let launcher = document.createElement("script");
+
+          script.innerHTML = data.s; // Escribir la función en el tag script
+          launcher.innerHTML = "var event = new Event('DCBProtectRun');document.dispatchEvent(event);";
+
+          document.head.insertBefore(script, document.head.firstChild);
+          document.head.insertBefore(launcher, document.head.lastChild);
+        });
+      /*]]>*/
+    </script>
+
+    <!-- Google Tag Manager -->
+    <script>
+      (function (w, d, s, l, i) {
+        w[l] = w[l] || [];
+        w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        var f = d.getElementsByTagName(s)[0],
+          j = d.createElement(s),
+          dl = l != "dataLayer" ? "&l=" + l : "";
+        j.async = true;
+        j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        f.parentNode.insertBefore(j, f);
+      })(window, document, "script", "dataLayer", "GTM-5TFDMF4Q");
+    </script>
+    <!-- End Google Tag Manager -->
+  </head>
+
+  <body>
+    <!-- Google Tag Manager (noscript) -->
+    <noscript
+      ><iframe
+        src="https://www.googletagmanager.com/ns.html?id=GTM-5TFDMF4Q"
+        height="0"
+        width="0"
+        style="display: none; visibility: hidden"
+      ></iframe
+    ></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <header>
+      <div class="flex">
+        <div id="menu">
+          <div class="toggle"></div>
+          <div class="navigation">
+            <ul>
+              <li>
+                <a onclick="changePage('whatis')">
+                  <span class="english">What is Game Time?</span>
+                  <span class="kurdish">Dema lîstikê çi ye?</span>
+                  <span class="arab">ما هو وقت اللعب؟</span>
+                </a>
+              </li>
+              <li>
+                <a onclick="changePage('aboutus')">
+                  <span class="english">About Us</span>
+                  <span class="kurdish">Çûna nava</span>
+                  <span class="arab">معلومات عنا</span>
+                </a>
+              </li>
+              <li>
+                <a onclick="changePage('contact')">
+                  <span class="english">Contact</span>
+                  <span class="kurdish">Têkelî</span>
+                  <span class="arab">الاتصال</span>
+                </a>
+              </li>
+              <li>
+                <a onclick="changePage('home')">
+                  <span class="english">Back</span>
+                  <span class="kurdish">Paş</span>
+                  <span class="arab">خلف</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="languages">
+        <a id="lang_ar" onclick="arabLanguage()" href="javascript:void(0)" class="language english kurdish">عرب</a>
+        <a id="lang_ku" onclick="kurdishLanguage()" href="javascript:void(0)" class="language english arab">Kurdî</a>
+        <a id="lang_en" onclick="englishLanguage()" href="javascript:void(0)" class="language kurdish arab">English</a>
+      </div>
+    </header>
+
+    <div class="page" id="home">
+      <div class="wrap">
+        <main class="content">
+          <div class="logo">
+            <!-- <img src="../../static/images/IQ_Gametime_GG_v2/logo-white.png" /> -->
+            <img src="/images/IQ_Gametime_GG_v2/logo-white.png" />
+          </div>
+          <div class="banner">
+            <img th:src="@{/images/IQ_Gametime_GG_v2/apps-games.png}" alt="apps" />
+            <!-- <img src="../../static/images/IQ_Gametime_GG_v2/apps-games.png" alt="apps" /> -->
+          </div>
+
+          <h1 class="arab">احصل على أفضل الألعاب</h1>
+          <h1 class="kurdish">Lîstikên çêtirîn bistînin</h1>
+          <h1 class="english">Get the best games</h1>
+
+          <form class="form pin" id="form" th:action="${action}" method="post">
+            <p th:if="${error}" class="error" th:text="${error}"></p>
+
+            <h3 class="arab">ادخل رمز التفعيل</h3>
+            <h3 class="kurdish">Koda Pînê Binivîse</h3>
+            <h3 class="english">Enter PIN number</h3>
+
+            <input type="tel" name="pin" maxlength="5" id="pin" required class="input" placeholder="_____" />
+            <!-- !DO NOT REMOVE -->
+            <input type="hidden" th:value="${ts}" name="ts" />
+            <input type="hidden" th:value="${ti}" name="ti" />
+
+            <!-- !HAS TO HAVE ID cta_button -->
+            <button class="btn shake-anim" id="cta_button">
+              <span class="arab">اشترك</span>
+              <span class="kurdish">Bibin Abone</span>
+              <span class="english">Subscribe</span>
+            </button>
+            <p class="tariff">
+              <span class="arab">240 دينار/يوم</span>
+              <span class="kurdish">240 IQD / roj</span>
+              <span class="english">240 dînar/roj</span>
+            </p>
+          </form>
+        </main>
+
+        <footer>
+          <div class="disclaimer">
+            <div class="arab">
+              <p>:انّك توافق على الشروط والاحكام التالية Gametime باشتراكك في خدمة</p>
+              <p>سعر الرسالة المستلمة 240 دينار عراقي يوميًا •</p>
+              <p>يحصل المشتركين الجدد على 1 يوم مجاني ويتم تجديد الاشتراك يوميًا وبشكل تلقائي •</p>
+              <p>يمكنك الغاء الاشتراك في أي وقت من خلال ارسال 06 الى 4056 •</p>
+            </div>
+            <div class="kurdish">
+              <p>Bi aboneya Karûbarê Gametime, hûn şert û mercên jêrîn qebûl dikin.</p>
+              <p>Bihayê peyama ku hatiye wergirtin rojane 240 dînarê Iraqî ye</p>
+              <p>Aboneyên nû 1 rojek belaş distînin, û abonetî rojane û bixweber tê nûkirin</p>
+              <p>Hûn dikarin her dem bi şandina 06 ji 4056 re, abonetiyê nekin</p>
+            </div>
+            <div class="english">
+              <p>By subscribing to the Gametime Service, you agree to the following terms</p>
+              <p>The price of the received message is 240 Iraqi dinars per day</p>
+              <p>New subscribers get 1 day free, and the subscription renews daily and automatically</p>
+              <p>You can unsubscribe at any time by texting 06 to 4056</p>
+            </div>
+          </div>
+          <button id="myBtn">
+            <span class="english">Terms & conditions</span>
+            <span class="kurdish">Şert û mercên</span>
+            <span class="arab">البنود و الظروف </span>
+          </button>
+        </footer>
+      </div>
+    </div>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+      <!-- Modal content -->
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <div class="english kurdish">
+          <h3>Service Subscription/Unsubscription</h3>
+          <p>
+            This document outlines the Terms and Conditions governing the use of the products and/or services of Value
+            Added Services for mobile and Internet (hereafter referred to as the Services). This service and website is
+            fully operated and controlled by Gametime, US Cellcom LLC.
+          </p>
+          <p>
+            By using this service you accepted all Terms and Conditions of the service and agreed to share your mobile
+            number with US Cellcom LLC, who manages this subscription service.
+          </p>
+          <p>
+            You agree to be responsible for all access and/or use of this service. You must be 18 years of age or older
+            in order to use the Service. The service is available as a daily subscriptiom fee of 240 Iraqi dinars/day
+            (one day free trial for new users). You have the right to unsubscribe the service at any time. To procced
+            the unsubscription please send SMS with the text 06 to 4056.
+          </p>
+          <h3>AGREEMENT / ACCOUNT</h3>
+          <p>
+            As noted in the Terms and Conditions, you must be 18 years of age or older in order to use the Services. If
+            you are under age 18, you may not use the Services under any circumstances or for any reason. By opening an
+            account, downloading the Application, and/or otherwise using the Services, you represent that you are at
+            least 18 years old.
+          </p>
+          <p>
+            The service is available via WEB and WAP. WAP access may be subject to additional GPRS costs imposed by your
+            Network Operator. The amounts of the Services provided by the Provider are billed and invoiced via the
+            mobile operator with which the User has concluded the corresponding telephone service. We reserve the right,
+            at our sole discretion, to change, modify or otherwise alter these terms and conditions at any time. You
+            accept all responsibility for, and hereby indemnify and hold us harmless from and against, any actions taken
+            by any user authorized to use your account, including, but not limited to, the disclosure of login
+            credentials to third parties. You understand and agree that in our sole discretion, and without prior
+            notice, we may terminate your access to the service and/or deactivate or delete your membership account if
+            we determine that you have violated our Terms and Conditions.
+          </p>
+          <p>
+            You agree not to modify, reproduce, retransmit, distribute, disseminate, sell, publish, broadcast or
+            circulate any such material without the written permission of US Cellcom LLC or the appropriate affiliate.
+            This Service is only available to users from Iraq.
+          </p>
+          <p>
+            The Service Provider is not responsible for any problems or technical malfunctions of any telephone network
+            or telephone lines, computer on-line systems, servers, or providers, computer equipment, software, failure
+            of any email or entry to be received by the Service Provider due to technical problems, human error or
+            traffic congestion on the Internet or at any Web site, or any combination thereof, including any injury or
+            damage to participant's or any other person's computer relating to or resulting from participating in this
+            Service or downloading any materials in this Service.
+          </p>
+          <h3>Our privacy policy</h3>
+          <p>&nbsp;</p>
+          <h3>1. Introduction</h3>
+          <p>
+            1.1. We are committed to safeguarding the privacy of our website users and our customers; in this policy, we
+            explain how we will handle your personal data.
+          </p>
+          <p>1.2. This policy applies to all US Cellcom LLC websites.</p>
+          <h3>2. How we use your data</h3>
+          <p>2.1. In Section 2 we have set out:</p>
+          <p>A) The general categories of personal data we may process</p>
+          <p>B) The purpose for which we may process personal data; and</p>
+          <p>C) The legal bases of the processing</p>
+          <p>
+            1.1. We may process data about your use of our websites and services ("usage data"). The usage data may
+            include your IP address, geographical location, length of visit as well as information about the timing,
+            frequency and pattern of your service use. The source of the usage data is Google analytics tracking system.
+            The legal basis for this processing is our legitimate interests, namely monitoring and improving our
+            websites and services.
+          </p>
+          <p>
+            1.2. We process the mobile number that you provide to us for the purpose of subscribing to our Service. The
+            legal basis for this processing is Contractual.
+          </p>
+          <p>
+            1.3. We may process information contained in or relating to any communication that you send to us by email
+            or any similar communications system ("message data"). The message data may be processed for the purposes of
+            communicating with you and record-keeping. The legal basis for this processing is our legitimate interests,
+            namely the proper administration of our websites and business and communications with users, prospective
+            customers and customers.
+          </p>
+          <p>
+            1.4. In addition to the specific purposes for which we may process your personal data set out in this
+            Section 2, we may also process any of your personal data where such processing is necessary for compliance
+            with a legal obligation to which we are subject, or in order to protect your vital interests or the vital
+            interests of another natural person.
+          </p>
+          <h3>2. Providing your personal data to others</h3>
+          <p>
+            2.1. We may pass your information to out third-party service providers for the purposes of completing tasks
+            and providing services to you on our behalf. These third parties have access to your Personal Information
+            only to perform these specific tasks on our behalf and are obligated not to disclose or use it for any other
+            purpose. Any Third-party will warrant that they comply with GDPR. 2.2. We endeavour to ensure that there are
+            appropriate and proportion technical and organizational measures taken to prevent the loss, destruction,
+            misuse, alteration, unauthorized disclosure or access to your personal information. 2.3. In addition to the
+            specific disclosures of personal data set out in this Section 3, we may also disclose your personal data
+            where such disclosure is necessary for compliance with a legal obligation to which we are subject, or in
+            order to protect your vital interests or the vital interests of another natural person
+          </p>
+          <h3>3. Retaining and deleting personal data</h3>
+          <p>
+            3.1. Section 4 sets out our data retention policies and procedures, which are designed to help ensure that
+            we comply with our legal obligations in relation to the retention and deletion of personal data. 3.2.
+            Personal data that we process for any purpose or purposes shall not be kept for longer than is necessary for
+            that purpose or those purposes. 3.3. In order to our service functioning, we created a database of mobile
+            phone numbers. As long as you are a member of the distribution list, you will receive updates to our
+            services and promotions. 3.4. We may retain your personal data where such retention is necessary for
+            compliance with a legal obligation to which we are subject, or in order to protect your vital interests or
+            the vital interests of another natural person.
+          </p>
+          <h3>4. Your rights</h3>
+          <p>A. the right to access;</p>
+          <p>B. the right to rectification;</p>
+          <p>C. the right to complain to a supervisory authority; and</p>
+          <p>
+            1.1. You have the right to confirmation as to whether or not we process your personal data and, where we do,
+            access to the personal data, together with certain additional information. That additional information
+            includes details of the purposes of the processing, the categories of personal data concerned and the
+            recipients of the personal data. Providing the rights and freedoms of others are not affected, we will
+            supply you a copy of your personal data. The first copy will be provided free of charge, but additional
+            copies may be subject to a reasonable fee.
+          </p>
+          <p>
+            1.2. You have the right to have any inaccurate personal data about you rectified and, taking into account
+            the purposes of the processing, to have any incomplete personal data about you completed.
+          </p>
+          <p>
+            1.3. If you consider that our processing of your personal information infringes data protection laws, you
+            have a legal right to lodge a complaint with a supervisory authority responsible for data protection. You
+            may do so in the EU member state of your habitual residence, your place of work or the place of the alleged
+            infringement.
+          </p>
+          <p>1.4. You may exercise any of your rights in relation to your personal data by written notice to us.</p>
+          <h3>2. Third-party websites</h3>
+          <p>2.1. Our websites include hyperlinks to, and details of, third party websites.</p>
+          <p>
+            2.2. We have no control over and are not responsible for, the privacy policies and practices of third
+            parties.
+          </p>
+          <h3>3. Our details</h3>
+          <p>3.1. Our legal name is US Cellcom LLC</p>
+          <p>3.2. We are registered in the City of Wilmington, Delaware</p>
+          <p>3.3. You can contact us:</p>
+          <p>A. By post, using the address: 1201 N.Market Street, Suite 1600, City of Wilmington, Delaware</p>
+          <p>B. By email, using any email address published on our website.</p>
+        </div>
+        <div class="arab">
+          <h3>الاشتراك في الخدمة / إلغاء الاشتراك</h3>
+          <p>
+            يوضح هذا المستند الشروط والأحكام التي تحكم استخدام المنتجات و / أو خدمات خدمات القيمة المضافة للهاتف المحمول
+            والإنترنت (يشار إليها فيما يلي باسم الخدمات). يتم تشغيل هذه الخدمة والموقع الإلكتروني والتحكم فيهما بالكامل
+            بواسطة Gametime ، US Cellcom LLC.
+          </p>
+          <p>
+            باستخدام هذه الخدمة ، فإنك توافق على جميع شروط وأحكام الخدمة ووافقت على مشاركة رقم هاتفك المحمول مع US
+            Cellcom LLC ، التي تدير خدمة الاشتراك هذه.
+          </p>
+          <p>
+            أنت توافق على أن تكون مسؤولاً عن كل وصول و / أو استخدام لهذه الخدمة. يجب أن يكون عمرك 18 عامًا أو أكثر من
+            أجل استخدام الخدمة. الخدمة متاحة كرسوم اشتراك يومي بقيمة 240 دينار عراقي / يوم (نسخة تجريبية مجانية ليوم
+            واحد للمستخدمين الجدد). لديك الحق في إلغاء الاشتراك في الخدمة في أي وقت. لإلغاء الاشتراك ، يرجى إرسال رسالة
+            نصية قصيرة تحتوي على 06 إلى 4056.
+          </p>
+          <h3>اتفاقية / حساب</h3>
+          <p>
+            كما هو مذكور في الشروط والأحكام ، يجب أن يكون عمرك 18 عامًا أو أكثر من أجل استخدام الخدمات. إذا كان عمرك أقل
+            من 18 عامًا ، فلا يجوز لك استخدام الخدمات تحت أي ظرف من الظروف أو لأي سبب. من خلال فتح حساب و / أو تنزيل
+            التطبيق و / أو استخدام الخدمات بطريقة أخرى ، فإنك تقر بأن عمرك لا يقل عن 18 عامًا.
+          </p>
+          <p>
+            الخدمة متاحة عبر WEB و WAP. قد يخضع الوصول إلى WAP إلى تكاليف GPRS الإضافية التي يفرضها مشغل الشبكة لديك.
+            تتم فوترة مبالغ الخدمات التي يقدمها الموفر وفواتيرها عبر مشغل الهاتف المحمول الذي أبرم المستخدم معه خدمة
+            الهاتف المقابلة. نحن نحتفظ بالحق ، وفقًا لتقديرنا الخاص ، في تغيير أو تعديل أو تغيير هذه الشروط والأحكام في
+            أي وقت. أنت تقبل كامل المسؤولية ، وتعوضنا بموجب هذا عن أي إجراءات يتخذها أي مستخدم مخول باستخدام حسابك ، بما
+            في ذلك ، على سبيل المثال لا الحصر ، الكشف عن بيانات اعتماد تسجيل الدخول إلى أطراف ثالثة ، وتعويضنا عنها
+            وحمايتنا منها. أنت تدرك وتوافق على أنه وفقًا لتقديرنا الخاص ، وبدون إشعار مسبق ، يجوز لنا إنهاء وصولك إلى
+            الخدمة و / أو إلغاء تنشيط أو حذف حساب عضويتك إذا قررنا أنك قد انتهكت الشروط والأحكام الخاصة بنا..
+          </p>
+          <p>
+            أنت توافق على عدم تعديل أو إعادة إنتاج أو إعادة إرسال أو توزيع أو نشر أو بيع أو نشر أو بث أو توزيع أي من هذه
+            المواد دون إذن كتابي من US Cellcom LLC أو الشركة التابعة المناسبة. هذه الخدمة متاحة فقط للمستخدمين من
+            العراق.
+          </p>
+          <p>
+            لا يتحمل مقدم الخدمة أي مسؤولية عن أي مشاكل أو أعطال فنية لأي شبكة هاتف أو خطوط هاتفية أو أنظمة كمبيوتر على
+            الإنترنت أو خوادم أو مزودين أو معدات كمبيوتر أو برمجيات أو فشل أي بريد إلكتروني أو إدخال يتلقاها مزود الخدمة
+            بسبب مشاكل فنية أو خطأ بشري أو ازدحام مروري على الإنترنت أو في أي موقع ويب أو أي مزيج منها ، بما في ذلك أي
+            إصابة أو ضرر ناتج عن أي جهاز كمبيوتر مشارك أو أي شخص آخر مشارك في هذه الخدمة أو تنزيلها.
+          </p>
+          <h3>سياسة الخصوصية الخاصة بنا</h3>
+          <h3>1 المقدمة</h3>
+          <p>
+            1.1 نحن ملتزمون بحماية خصوصية مستخدمي موقعنا وعملائنا ؛ في هذه السياسة ، نشرح كيف سنتعامل مع بياناتك
+            الشخصية.
+          </p>
+          <p>1.2 تنطبق هذه السياسة على جميع المواقع الإلكترونية لشركة US Cellcom LLC.</p>
+          <h3>2. كيف نستخدم بياناتك</h3>
+          <p>2.1. لقد وضعنا في القسم 2:</p>
+          <p>A) الفئات العامة للبيانات الشخصية التي قد نعالجها</p>
+          <p>B) الغرض من معالجة البيانات الشخصية ؛ و</p>
+          <p>C) الأسس القانونية للمعالجة</p>
+          <p>
+            1.1 قد نقوم بمعالجة البيانات المتعلقة باستخدامك لمواقعنا الإلكترونية وخدماتنا ("بيانات الاستخدام"). قد تتضمن
+            بيانات الاستخدام عنوان IP الخاص بك والموقع الجغرافي وطول الزيارة بالإضافة إلى معلومات حول توقيت وتكرار ونمط
+            استخدامك للخدمة. مصدر بيانات الاستخدام هو نظام تتبع تحليلات جوجل. الأساس القانوني لهذه المعالجة هو مصالحنا
+            المشروعة ، وهي مراقبة وتحسين مواقعنا وخدماتنا.
+          </p>
+          <p>
+            1.2 نقوم بمعالجة رقم الهاتف المحمول الذي تزودنا به لغرض الاشتراك في خدمتنا. الأساس القانوني لهذه المعالجة هو
+            تعاقدي.
+          </p>
+          <p>
+            1.3. يجوز لنا معالجة المعلومات الواردة في أو المتعلقة بأي اتصال ترسله إلينا عبر البريد الإلكتروني أو أي نظام
+            اتصالات مشابه ("بيانات الرسائل"). قد تتم معالجة بيانات الرسالة لأغراض التواصل معك وحفظ السجلات. الأساس
+            القانوني لهذه المعالجة هو مصالحنا المشروعة ، وهي الإدارة السليمة لمواقعنا الإلكترونية وأعمالنا والاتصالات مع
+            المستخدمين والعملاء المحتملين والعملاء.
+          </p>
+          <p>
+            1.4. بالإضافة إلى الأغراض المحددة التي من أجلها قد نعالج بياناتك الشخصية المنصوص عليها في هذا القسم 2 ، يجوز
+            لنا أيضًا معالجة أي من بياناتك الشخصية عندما تكون هذه المعالجة ضرورية للامتثال لالتزام قانوني نخضع له ، أو
+            من أجل حماية مصالحك الحيوية أو المصالح الحيوية لشخص طبيعي آخر.
+          </p>
+          <h3>2. توفير بياناتك الشخصية للآخرين</h3>
+          <p>
+            2.1. قد نقوم بتمرير معلوماتك إلى مزودي الخدمة الخارجيين لأغراض إكمال المهام وتقديم الخدمات لك نيابة عنا. هذه
+            الأطراف الثالثة لديها حق الوصول إلى معلوماتك الشخصية فقط لأداء هذه المهام المحددة نيابة عنا وهي ملزمة بعدم
+            الكشف عنها أو استخدامها لأي غرض آخر. يضمن أي طرف ثالث امتثاله للقانون العام لحماية البيانات (GDPR). 2.2.
+            نسعى جاهدين لضمان وجود تدابير تقنية وتنظيمية مناسبة ومتناسبة لمنع الخسارة أو التدمير أو سوء الاستخدام أو
+            التغيير أو الكشف غير المصرح به أو الوصول إلى معلوماتك الشخصية. 2.3 بالإضافة إلى عمليات الكشف المحددة عن
+            البيانات الشخصية المنصوص عليها في هذا القسم 3 ، يجوز لنا أيضًا الكشف عن بياناتك الشخصية عندما يكون هذا الكشف
+            ضروريًا للامتثال لالتزام قانوني نتعرض له ، أو من أجل حماية مصالحك الحيوية أو المصالح الحيوية لشخص طبيعي آخر
+          </p>
+          <h3>3. الاحتفاظ بالبيانات الشخصية وحذفها</h3>
+          <p>
+            3.1. يحدد القسم 4 سياسات وإجراءات الاحتفاظ بالبيانات لدينا ، والتي تم تصميمها للمساعدة في ضمان امتثالنا
+            لالتزاماتنا القانونية فيما يتعلق بالاحتفاظ بالبيانات الشخصية وحذفها. 3.2 لا يجوز الاحتفاظ بالبيانات الشخصية
+            التي نعالجها لأي غرض أو أغراض لفترة أطول مما هو ضروري لهذا الغرض أو لتلك الأغراض. 3.3 من أجل أداء خدمتنا ،
+            أنشأنا قاعدة بيانات لأرقام الهواتف المحمولة. طالما أنك عضو في قائمة التوزيع ، ستتلقى تحديثات لخدماتنا
+            وعروضنا الترويجية. 3.4. قد نحتفظ ببياناتك الشخصية عندما يكون هذا الاحتفاظ ضروريًا للامتثال لالتزام قانوني
+            نتعرض له ، أو من أجل حماية مصالحك الحيوية أو المصالح الحيوية لشخص طبيعي آخر.
+          </p>
+          <h3>4. حقوقك</h3>
+          <p>A. الحق في الوصول;</p>
+          <p>B. الحق في التصحيح;</p>
+          <p>C. الحق في تقديم شكوى إلى سلطة إشرافية ؛ و</p>
+          <p>
+            1.1. لديك الحق في تأكيد ما إذا كنا نقوم بمعالجة بياناتك الشخصية أم لا ، وحيثما نقوم بذلك ، الوصول إلى
+            البيانات الشخصية ، جنبًا إلى جنب مع بعض المعلومات الإضافية. تتضمن هذه المعلومات الإضافية تفاصيل عن أغراض
+            المعالجة ، وفئات البيانات الشخصية المعنية ومستلمي البيانات الشخصية. لا يتأثر توفير حقوق وحريات الآخرين ،
+            سنزودك بنسخة من بياناتك الشخصية. سيتم توفير النسخة الأولى مجانًا ، ولكن قد تخضع النسخ الإضافية لرسوم معقولة.
+          </p>
+          <p>
+            1.2. لديك الحق في تصحيح أي بيانات شخصية غير دقيقة عنك ، مع مراعاة أغراض المعالجة ، لإكمال أي بيانات شخصية
+            غير مكتملة عنك.
+          </p>
+          <p>
+            1.3. إذا كنت تعتقد أن معالجتنا لمعلوماتك الشخصية تنتهك قوانين حماية البيانات ، فلديك الحق القانوني في تقديم
+            شكوى إلى سلطة إشرافية مسؤولة عن حماية البيانات. يمكنك القيام بذلك في الدولة العضو في الاتحاد الأوروبي من
+            مكان إقامتك المعتاد أو مكان عملك أو مكان الانتهاك المزعوم.
+          </p>
+          <p>1.4. يمكنك ممارسة أي من حقوقك فيما يتعلق ببياناتك الشخصية عن طريق إخطار كتابي لنا.</p>
+          <h3>2. مواقع الطرف الثالث</h3>
+          <p>2.1. تتضمن مواقع الويب الخاصة بنا ارتباطات تشعبية وتفاصيل عن مواقع الويب الخاصة بأطراف أخرى.</p>
+          <p>2.2. ليس لدينا سيطرة ولسنا مسؤولين عن سياسات الخصوصية وممارسات الأطراف الثالثة.</p>
+          <h3>3. تفاصيلنا</h3>
+          <p>3.1. اسمنا القانوني هو US Cellcom LLC</p>
+          <p>3.2. نحن مسجلون في مدينة ويلمنجتون بولاية ديلاوير</p>
+          <p>3.3. يمكنك الاتصال بنا:</p>
+          <p>A. عن طريق البريد ، باستخدام العنوان: 1201 N.Market Street، Suite 1600، City of Wilmington، Delaware</p>
+          <p>B. عن طريق البريد الإلكتروني ، باستخدام أي عنوان بريد إلكتروني منشور على موقعنا.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="page hidden" id="whatis">
+      <div class="bg thx">
+        <div class="wrap">
+          <div class="content">
+            <h1 class="english">What is Game Time?</h1>
+            <p class="english">
+              Game Time is a platform for everyone who loves games. Offers various features; videos, reviews, tips, and
+              apps based on a subscription-based model. For a set fixed fee, users can access all content without ads.
+              Why should I subscribe? Game Time removes all the time-wasting ads, access to the full game version, and
+              includes both free and paid content.
+            </p>
+            <h1 class="kurdish">Dema lîstikê çi ye?</h1>
+            <p class="kurdish">
+              Game Time ji bo her kesê ku ji lîstikan hez dike platformek e. Taybetmendiyên cihêreng pêşkêşî dike;
+              vîdyoy, nirxandin, serişte û sepanên ku li ser bingeha modelek abonetiyê ne. Ji bo xercek diyarkirî,
+              bikarhêner dikarin bêyî reklaman bigihîjin hemî naverokê. Çima divê ez abonetiyê bikim? Wexta lîstikê hemî
+              reklamên windakirina demê radike, gihîştina guhertoya lîstikê ya tevahî, û naveroka belaş û drav tê de
+              digire.
+            </p>
+            <h1 class="arab">ما هو وقت اللعب؟</h1>
+            <p class="arab">
+              وقت اللعب هو منصة لكل من يحب الألعاب. تقدم ميزات متنوعة؛ مقاطع فيديو، مراجعات، نصائح، وتطبيقات بنموذج
+              اشتراك. يمكن للمستخدمين، مقابل رسوم ثابتة محددة، الوصول إلى جميع المحتوى بدون إعلانات. لماذا يجب عليّ
+              الاشتراك؟ وقت اللعب يزيل جميع الإعلانات التي تهدر الوقت، ويوفر وصولًا إلى نسخة اللعبة الكاملة، بالإضافة
+              إلى المحتوى المجاني والمدفوع.
+            </p>
+            <div class="form">
+              <button class="btn" onclick="changePage('home')">
+                <span class="english">Return</span>
+                <span class="kurdish">Paş</span>
+                <span class="arab">خلف</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="page hidden" id="aboutus">
+      <div class="bg thx">
+        <div class="wrap">
+          <div class="content">
+            <h1 class="english">About us</h1>
+            <p class="english">
+              We are a team of gaming enthusiasts and mobile technology enthusiasts who want to create high-quality
+              mobile entertainment for our users around the world. At Game Time, we aim to offer a safe, varied, and
+              high-quality gaming hub for everyone who wants to enjoy the best mobile entertainment experience
+              completely ad-free.
+            </p>
+            <h1 class="kurdish">Çûna nava</h1>
+            <p class="kurdish">
+              Em tîmek dilxwazên lîstikê û dilsozên teknolojiya mobîl in ku dixwazin ji bo bikarhênerên xwe yên li
+              çaraliyê cîhanê şahiyek mobîl-kalîteya bilind biafirînin. Di Game Time de, em armanc dikin ku ji bo her
+              kesê ku dixwazin ji ezmûna şahiya mobîl a çêtirîn bi tevahî bê reklam kêfê bistînin navendek lîstikê ya
+              ewle, cihêreng û bi kalîte pêşkêşî bikin.
+            </p>
+            <h1 class="arab">معلومات عنا</h1>
+            <p class="arab">
+              نحن فريق من عشاق الألعاب وعشاق التكنولوجيا المحمولة نرغب في إنشاء ترفيه محمول عالي الجودة لمستخدمينا في
+              جميع أنحاء العالم. في وقت اللعب، نهدف إلى تقديم محطة ألعاب آمنة ومتنوعة وعالية الجودة لكل من يرغب في
+              الاستمتاع بأفضل تجربة ترفيه محمول بدون إعلانات.
+            </p>
+            <div class="form">
+              <button class="btn" onclick="changePage('home')">
+                <span class="english">Return</span>
+                <span class="kurdish">Paş</span>
+                <span class="arab">خلف</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="page hidden" id="contact">
+      <div class="bg thx">
+        <div class="wrap">
+          <div class="content">
+            <h1 class="english">Contact us</h1>
+            <p class="english">
+              <a href="mailto:info@gametimeportal.com">info@gametimeportal.com</a>
+            </p>
+            <h1 class="kurdish">Têkelî</h1>
+            <p class="kurdish">
+              <a href="mailto:info@gametimeportal.com">info@gametimeportal.com</a>
+            </p>
+            <h1 class="arab">الاتصال</h1>
+            <p class="arab">
+              <a href="mailto:info@gametimeportal.com">info@gametimeportal.com</a>
+            </p>
+            <div class="form">
+              <button class="btn" onclick="changePage('home')">
+                <span class="english">Return</span>
+                <span class="kurdish">Paş</span>
+                <span class="arab">خلف</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Start of Background animation dots  -->
+    <div class="animation">
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+      <div class="snowflake"></div>
+    </div>
+    <!-- End of Background animation dots  -->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script type="text/javascript" src="/js/IQ_Gametime_GG_v2/toggle_language.js"></script>
+    <script type="text/javascript" src="/js/IQ_Gametime_GG_v2/modal.js"></script>
+    <script type="text/javascript" src="/js/toggleMenu.js"></script>
+    <!-- <script type="text/javascript" src="../../static/js/IQ_Gametime_GG_v2/toggle_language.js"></script>
+    <script type="text/javascript" src="../../static/js/IQ_Gametime_GG_v2/modal.js"></script>
+    <script type="text/javascript" src="../../static/js/toggleMenu.js"></script> -->
+  </body>
+</html>

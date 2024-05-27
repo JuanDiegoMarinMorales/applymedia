@@ -1,0 +1,68 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8" />
+    <title>Gametime</title>
+    <meta name="referrer" content="unsafe-url" />
+    <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
+    <link th:attr="href=@{/css/IRQ_GamesGeneric_Ap/style.css}" rel="stylesheet" />
+    <!-- <link rel="stylesheet" href="../../static/css/IRQ_GamesGeneric_Ap/style.css" /> -->
+    <!-- Hotjar Tracking Code for IRQ_GamesGeneric_Ap -->
+    <script>
+      (function (h, o, t, j, a, r) {
+        h.hj =
+          h.hj ||
+          function () {
+            (h.hj.q = h.hj.q || []).push(arguments);
+          };
+        h._hjSettings = { hjid: 3618371, hjsv: 6 };
+        a = o.getElementsByTagName("head")[0];
+        r = o.createElement("script");
+        r.async = 1;
+        r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+        a.appendChild(r);
+      })(window, document, "https://static.hotjar.com/c/hotjar-", ".js?sv=");
+    </script>
+  </head>
+
+  <body>
+    <header>
+      <div class="logo">
+        <img th:src="@{/images/IRQ_GamesGeneric_Ap/logo.png}" alt="icon" />
+      </div>
+      <div class="languages">
+        <a id="lang_ar" onclick="arabLanguage()" href="javascript:void(0)" class="language">عرب</a>
+        <a id="lang_ku" onclick="kurdishLanguage()" href="javascript:void(0)" class="language">Kurdî</a>
+      </div>
+    </header>
+    <main class="content page" id="home">
+      <div class="container">
+        <h1 class="arab">+1000 الألعاب والتطبيقات</h1>
+        <h1 class="kurdish">+1000 lîstik û sepanên</h1>
+        <div class="success-checkmark">
+          <div class="check-icon">
+            <span class="icon-line line-tip"></span>
+            <span class="icon-line line-long"></span>
+            <div class="icon-circle"></div>
+            <div class="icon-fix"></div>
+          </div>
+        </div>
+        <h1 class="arab">شكرًا لك</h1>
+        <h2 class="arab">ستتم إعادة توجيهك خلال <span id="countdown"></span> ثوانٍ</h2>
+        <h1 class="kurdish">Sipas ji were</h1>
+        <h2 class="kurdish">Hûn ê di <span id="countdown2"></span> seconds de werin verast kirin</h2>
+        <button id="btn" class="btn" style="display: none">
+          <span class="arab">الوصول الى المحتوى</span> <span class="kurdish">Gihiştina naverokê</span>
+        </button>
+      </div>
+    </main>
+    <script src="/js/toggle_language.js"></script>
+    <script src="/js/countdown.js"></script>
+    <!-- <script src="../../static/js/toggle_language.js"></script>
+    <script src="../../static/js/countdown.js"></script> -->
+    <script type="text/javascript">
+      document.getElementById("btn").onclick = function () {
+        location.href = "https://www.gametime.link/";
+      };
+    </script>
+  </body>
+</html>
